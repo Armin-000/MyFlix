@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyFlix</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- Ikone (Font Awesome) -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-bx1wFQvXGyzXJgaZUe3vxYfXq1QvEUVuXnV5F4myF5PjyN7oS9fM6v8pBR/3txqXbTQ2qRzWTqAKuCyOJ6p0A=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- Global overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- LOGIN MODAL -->
+    <div class="modal" id="signinModal">
+        <div class="modal-inner">
+            <button class="modal-close" data-close-modal>
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h2>Sign In</h2>
+            <form class="modal-form" id="signinForm">
+                <input type="email" id="signinEmail" placeholder="Email" required />
+                <input type="password" id="signinPassword" placeholder="Password" required />
+                <button type="submit">Sign In</button>
+                <p class="modal-helper">
+                    New to MyFlix? <a href="#">Create an account</a>.
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- MOVIE DETAILS MODAL -->
+    <div class="modal modal-movie" id="movieModal">
+        <div class="modal-inner modal-inner-wide">
+            <button class="modal-close" data-close-modal>
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="movie-modal-header">
+                <div class="movie-modal-info">
+                    <h2 id="movieTitle"></h2>
+                    <div class="movie-meta">
+                        <span id="movieYear"></span>
+                        <span id="movieRating"></span>
+                        <span id="movieDuration"></span>
+                    </div>
+                    <div class="movie-tags" id="movieGenres"></div>
+                    <p id="movieDescription"></p>
+                    <div class="movie-modal-actions">
+                        <button class="btn btn-primary" id="moviePlayBtn">
+                            <i class="fa-solid fa-play"></i> Play
+                        </button>
+                        <button class="btn btn-secondary" id="movieMyListBtn">
+                            <i class="fa-regular fa-bookmark"></i> My List
+                        </button>
+                    </div>
+                </div>
+                <div class="movie-modal-backdrop">
+                    <div class="movie-backdrop-inner">
+                        <div class="fake-player">
+                            <i class="fa-solid fa-play"></i>
+                            <p>Trailer preview</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER / HERO -->
+    <header class="header" id="header">
+        <div class="header-overlay"></div>
+
+        <!-- NAVBAR -->
+        <nav class="nav">
+            <div class="nav-left">
+                <div class="logo">MyFlix</div>
+                <ul class="nav-menu" id="navMenu">
+                    <li data-nav-section="home" class="active">Home</li>
+                    <li data-nav-section="series">Series</li>
+                    <li data-nav-section="movies">Movies</li>
+                    <li data-nav-section="mylist">My List</li>
+                </ul>
+            </div>
+
+            <div class="nav-right">
+                <div class="nav-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search titles"
+                        aria-label="Search titles"
+                    />
+                </div>
+                <select class="language-select">
+                    <option value="en">English</option>
+                    <option value="hr">Hrvatski</option>
+                </select>
+                <button class="btn btn-signin" id="openSignin">
+                    Sign In
+                </button>
+                <div class="nav-profile" id="navProfile">
+                    <img
+                        src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=120"
+                        alt="Profile"
+                    />
+                    <i class="fa-solid fa-caret-down"></i>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <p class="profile-email" id="profileEmail">Guest</p>
+                        <button id="signoutBtn">Sign out</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hamburger -->
+            <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+
+        <!-- MOBILE NAV -->
+        <div class="nav-mobile" id="navMobile">
+            <ul class="nav-menu-mobile">
+                <li data-nav-section="home" class="active">Home</li>
+                <li data-nav-section="series">Series</li>
+                <li data-nav-section="movies">Movies</li>
+                <li data-nav-section="mylist">My List</li>
+            </ul>
+            <div class="nav-mobile-bottom">
+                <div class="nav-search mobile">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input
+                        type="text"
+                        id="searchInputMobile"
+                        placeholder="Search titles"
+                    />
+                </div>
+                <button class="btn btn-signin mobile-signin" id="openSigninMobile">
+                    Sign In
+                </button>
+            </div>
+        </div>
+
+        <!-- HERO SEKCIJA -->
+        <section class="hero">
+            <div class="hero-gradient"></div>
+            <div class="hero-content">
+                <p class="hero-tagline" id="heroTagline">MyFlix Original</p>
+                <h1 id="heroTitle">Neon Skies</h1>
+                <div class="hero-meta">
+                    <span class="badge">New</span>
+                    <span id="heroYear">2024</span>
+                    <span id="heroRating">16+</span>
+                    <span id="heroDuration">2h 1m</span>
+                </div>
+                <p class="hero-description" id="heroDescription">
+                    In a city of endless lights, a rogue pilot discovers a secret that can
+                    rewrite reality itself.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary" id="heroPlayBtn">
+                        <i class="fa-solid fa-play"></i> Play
+                    </button>
+                    <button class="btn btn-secondary" id="heroMoreInfoBtn">
+                        <i class="fa-solid fa-circle-info"></i> More Info
+                    </button>
+                </div>
+            </div>
+        </section>
+    </header>
+
+    <!-- GLAVNI SADRŽAJ -->
+    <main>
+        <!-- ROWS / CAROUSELI -->
+        <section class="rows" id="rowsSection">
+            <!-- Redovi se pune iz JS-a na temelju .row-wrapper -->
+            <div class="row-wrapper" data-row-id="trending" data-row-title="Trending Now"></div>
+            <div class="row-wrapper" data-row-id="popular" data-row-title="Popular on MyFlix"></div>
+            <div class="row-wrapper" data-row-id="scifi" data-row-title="Sci-Fi & Fantasy"></div>
+            <div class="row-wrapper" data-row-id="crime" data-row-title="Crime Thrillers"></div>
+            <div class="row-wrapper" data-row-id="mylist" data-row-title="My List (saved)" data-mylist-row></div>
+        </section>
+
+        <!-- FAQ SEKCIJA -->
+        <section class="faq">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    What is MyFlix?
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>
+                        MyFlix is a Netflix-inspired demo streaming interface for practicing
+                        front-end development with a realistic layout, interactions and My List
+                        functionality (using your browser storage).
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Is this a real streaming service?
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>
+                        No. This is a front-end only demo. There is no real account system
+                        or paid subscription. You can extend it with your own backend (Node,
+                        PHP, etc.) and database.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Can I use this code in my projects?
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>
+                        Yes. You can adapt this layout, improve it, add frameworks (Vue, React)
+                        and create your own streaming-style application or school project.
+                    </p>
+                </div>
+            </div>
+
+            <p class="faq-subtext">
+                Ready to build your own streaming app? Use this layout as a starting point.
+            </p>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p class="footer-call">Questions? Call 0800-000-000</p>
+        <div class="footer-grid">
+            <a href="#">FAQ</a>
+            <a href="#">Help Center</a>
+            <a href="#">Account</a>
+            <a href="#">Media Center</a>
+            <a href="#">Investor Relations</a>
+            <a href="#">Jobs</a>
+            <a href="#">Redeem Gift Cards</a>
+            <a href="#">Terms of Use</a>
+            <a href="#">Privacy</a>
+            <a href="#">Cookie Preferences</a>
+            <a href="#">Corporate Information</a>
+            <a href="#">Contact Us</a>
+        </div>
+        <div class="footer-bottom">
+            <select class="language-select">
+                <option value="en">English</option>
+                <option value="hr">Hrvatski</option>
+            </select>
+            <p>MyFlix Croatia</p>
+        </div>
+    </footer>
+
+    <script src="app.js" defer></script>
+</body>
+</html>
